@@ -18,7 +18,8 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests((auth) -> auth
                 // 루트 경로에 대한 모든 사용자의 접근 허용
-                .requestMatchers("/").permitAll()
+                // 회원가입 페이지 및 회원가입 처리 경로 허용
+                .requestMatchers("/", "/login", "/register", "/WEB-INF/**").permitAll()
                 // 관리자 경로는 ADMIN 권한을 가진 사용자만 허용
                 .requestMatchers("/admin").hasRole("ADMIN")
                 // 그 외의 모든 경로에 대한 접근 허용

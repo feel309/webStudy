@@ -6,7 +6,7 @@
     </select>
 
     <insert id="saveUser" parameterType="com.example.demo.dto.UserDTO">
-        INSERT INTO users (username, password, email)
-        VALUES (#{username}, #{password}, #{email})
+        INSERT INTO users (username, password, email, role)
+        VALUES (#{username}, #{password}, #{email}, #{role})
     </insert>
 </mapper>
