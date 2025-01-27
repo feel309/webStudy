@@ -1,9 +1,13 @@
 package com.example.demo.controller;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.service.LotteryService;
 import com.example.demo.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +32,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    
+	@Autowired
+    private LotteryService lotteryService;
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -112,8 +120,20 @@ public class UserController {
     
 	//게시판 페이지
 	@GetMapping("/lotto/board")
-	public String boardPage() {
-	    return "board";
+    public String boardPage(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(required = false) String lotteryName,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            Model model) {
+		int total = lotteryService.getBoardCount();
+		List<Map<String, Object>> boardList = lotteryService.getBoardList(lotteryName, startDate, endDate, page, size);
+		
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", (int) Math.ceil((double) total / size));
+		
+		return "board";
 	}
 	
     //관리자 페이지
