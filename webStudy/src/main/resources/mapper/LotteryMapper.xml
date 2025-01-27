@@ -3,36 +3,38 @@
 <mapper namespace="com.example.demo.dao.LotteryDAO">
 
     <!-- 게시글 목록 조회 -->
-    <select id="getBoardList" parameterType="map" resultType="map">
-        SELECT * FROM lottery_board
-        <if test="lotteryName != null">
-	        WHERE lottery_name LIKE CONCAT('%', #{lotteryName}, '%')
-        </if>
-        <if test="startDate != null">
-	        AND purchase_date <![CDATA[>=]]> #{startDate}
-        </if>
-        <if test="endDate != null">
-	        AND purchase_date <![CDATA[<=]]> #{endDate}
-        </if>
-        <if test="lotteryName != null">
-	        ORDER BY id DESC
-	        LIMIT #{offset}, #{pageSize}
-        </if>
-    </select>
+	<select id="getBoardList" parameterType="map" resultType="map">
+	    SELECT * FROM lottery_board
+	    <where>
+	        <if test="lotteryName != null">
+	            lottery_name LIKE CONCAT('%', #{lotteryName}, '%')
+	        </if>
+	        <if test="startDate != null">
+	            AND purchase_date <![CDATA[>=]]> #{startDate}
+	        </if>
+	        <if test="endDate != null">
+	            AND purchase_date <![CDATA[<=]]> #{endDate}
+	        </if>
+	    </where>
+	    ORDER BY id DESC
+	    LIMIT #{offset}, #{pageSize}
+	</select>
     
     <!-- 게시글 수 조회 -->
-    <select id="getBoardCount" resultType="int">
-        SELECT COUNT(*) FROM lottery_board
-        <if test="lotteryName != null">
-	        WHERE lottery_name LIKE CONCAT('%', #{lotteryName}, '%')
-        </if>
-        <if test="startDate != null">
-	        AND purchase_date <![CDATA[>=]]> #{startDate}
-        </if>
-        <if test="endDate != null">
-	        AND purchase_date <![CDATA[<=]]> #{endDate}
-        </if>
-    </select>
+	<select id="getBoardCount" parameterType="map" resultType="int">
+	    SELECT COUNT(*) FROM lottery_board
+	    <where>
+	        <if test="lotteryName != null">
+	            lottery_name LIKE CONCAT('%', #{lotteryName}, '%')
+	        </if>
+	        <if test="startDate != null">
+	            AND purchase_date <![CDATA[>=]]> #{startDate}
+	        </if>
+	        <if test="endDate != null">
+	            AND purchase_date <![CDATA[<=]]> #{endDate}
+	        </if>
+	    </where>
+	</select>
     
     <!-- 게시글 등록 -->
     <insert id="insertBoard">

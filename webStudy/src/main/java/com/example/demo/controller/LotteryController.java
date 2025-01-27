@@ -24,12 +24,19 @@ public class LotteryController {
 
     @GetMapping("/board")
     public String board(@RequestParam(defaultValue = "1") int page,
-                        @RequestParam(defaultValue = "5") int size,
+                        @RequestParam(defaultValue = "10") int size,
                         @RequestParam(required = false) String lotteryName,
                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
                         Model model) {
-        int total = lotteryService.getBoardCount();
+        // 필터 조건을 반영한 전체 게시글 수 조회
+        Map<String, Object> params = new HashMap<>();
+        params.put("lotteryName", lotteryName);
+        params.put("startDate", startDate);
+        params.put("endDate", endDate);
+        int total = lotteryService.getBoardCount(params);
+
+        // 게시글 목록 조회
         List<Map<String, Object>> boardList = lotteryService.getBoardList(lotteryName, startDate, endDate, page, size);
 
         model.addAttribute("boardList", boardList);

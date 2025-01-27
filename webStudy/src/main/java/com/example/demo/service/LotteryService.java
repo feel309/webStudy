@@ -30,8 +30,8 @@ public class LotteryService {
         return LotteryDAO.getBoardList(params);
     }
 
-    public int getBoardCount() {
-        return LotteryDAO.getBoardCount();
+    public int getBoardCount(Map<String, Object> params) {
+        return LotteryDAO.getBoardCount(params);
     }
 
     public void insertBoard(Map<String, Object> board) {

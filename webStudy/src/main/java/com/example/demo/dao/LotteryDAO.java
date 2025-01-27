@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LotteryDAO {
     List<Map<String, Object>> getBoardList(Map<String, Object> params);
-    int getBoardCount();
+    int getBoardCount(Map<String, Object> params);
     void insertBoard(Map<String, Object> board);
 }

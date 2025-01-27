@@ -38,9 +38,9 @@
 
 <!-- 페이징 -->
 <div>
-    <c:forEach begin="1" end="${totalPages}" var="i">
-        <a href="?page=${i}">${i}</a>
-    </c:forEach>
+	<c:forEach begin="1" end="${totalPages}" var="i">
+	    <a href="?page=${i}&lotteryName=${param.lotteryName}&startDate=${param.startDate}&endDate=${param.endDate}">${i}</a>
+	</c:forEach>
 </div>
 
 
