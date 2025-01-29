@@ -144,6 +144,12 @@ public class UserController {
 		return "board";
 	}
 	
+    // 게시글 등록 페이지
+    @GetMapping("/board/create")
+    public String boardCreatePage() {
+        return "boardCreate";
+    }
+	
     //관리자 페이지
     @GetMapping("/admin")
     public String adminPage() {

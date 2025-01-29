@@ -14,8 +14,8 @@
     <input type="date" name="startDate" value="${param.startDate}">
     <input type="date" name="endDate" value="${param.endDate}">
     <button type="submit">검색</button>
+    <button id="create" type="button" onclick="location.href='/board/create'">게시글 등록</button>
 </form>
-
 
 <table border="1">
     <tr>
@@ -43,15 +43,5 @@
 	</c:forEach>
 </div>
 
-
-<h2>게시글 등록</h2>
-<form action="/board/add" method="post">
-    <label>구입일자: <input type="date" name="purchaseDate" required></label><br>
-    <label>복권명: <input type="text" name="lotteryName" required></label><br>
-    <label>회차: <input type="number" name="drawNumber" required></label><br>
-    <label>수량: <input type="number" name="quantity" required></label><br>
-    <label>주문번호: <input type="text" name="orderNumber" required></label><br>
-    <button type="submit">등록</button>
-</form>
 </body>
 </html>
