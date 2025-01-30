@@ -28,7 +28,7 @@
     <c:forEach var="board" items="${boardList}">
         <tr>
             <td>${board.purchase_date}</td>
-            <td>${board.lottery_name}</td>
+            <td><a href="/board/detail/${board.id}">${board.lottery_name}</a></td>
             <td>${board.draw_number}</td>
             <td>${board.quantity}</td>
             <td>${board.order_number}</td>

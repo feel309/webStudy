@@ -14,10 +14,10 @@ import com.example.demo.dao.LotteryDAO;
 public class LotteryService {
 	
 	@Autowired
-    private LotteryDAO LotteryDAO;
+    private LotteryDAO lotteryDAO;
 
-    public LotteryService(LotteryDAO lotteryMapper) {
-        this.LotteryDAO = lotteryMapper;
+    public LotteryService(LotteryDAO lotteryDAO) {
+        this.lotteryDAO = lotteryDAO;
     }
 
     public List<Map<String, Object>> getBoardList(String lotteryName, Date startDate, Date endDate, int page, int size) {
@@ -27,14 +27,27 @@ public class LotteryService {
         params.put("endDate", endDate);
         params.put("offset", (page - 1) * size);
         params.put("pageSize", size);
-        return LotteryDAO.getBoardList(params);
+        return lotteryDAO.getBoardList(params);
     }
 
     public int getBoardCount(Map<String, Object> params) {
-        return LotteryDAO.getBoardCount(params);
+        return lotteryDAO.getBoardCount(params);
     }
 
     public void insertBoard(Map<String, Object> board) {
-    	LotteryDAO.insertBoard(board);
+    	lotteryDAO.insertBoard(board);
     }
+    
+    public void insertComment(int boardId, Integer parentId, String content) {
+        Map<String, Object> comment = new HashMap<>();
+        comment.put("boardId", boardId);
+        comment.put("parentId", parentId);
+        comment.put("content", content);
+        lotteryDAO.insertComment(comment);
+    }
+
+    public List<Map<String, Object>> getCommentsByBoardId(int boardId) {
+        return lotteryDAO.getCommentsByBoardId(boardId);
+    }
+    
 }

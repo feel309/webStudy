@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -46,9 +47,6 @@ public class LotteryController {
         return "board";
     }
     
-    
-    
-
     @PostMapping("/board/add")
     public String addBoard(@RequestParam String purchaseDate,
                            @RequestParam String lotteryName,
@@ -65,4 +63,22 @@ public class LotteryController {
         lotteryService.insertBoard(board);
         return "redirect:/board";
     }
+    
+    @PostMapping("/board/comment")
+    public String addComment(@RequestParam int boardId,
+                             @RequestParam(required = false) Integer parentId,
+                             @RequestParam String content) {
+        lotteryService.insertComment(boardId, parentId, content);
+        return "redirect:/board/detail/" + boardId;
+    }
+
+    @GetMapping("/board/detail/{id}")
+    public String boardDetail(@PathVariable int id, Model model) {
+        List<Map<String, Object>> comments = lotteryService.getCommentsByBoardId(id);
+        model.addAttribute("comments", comments);
+        model.addAttribute("id", id);
+        return "board_detail";
+    }
+    
+    
 }
