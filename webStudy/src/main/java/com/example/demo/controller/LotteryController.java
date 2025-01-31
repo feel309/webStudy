@@ -74,7 +74,9 @@ public class LotteryController {
 
     @GetMapping("/board/detail/{id}")
     public String boardDetail(@PathVariable int id, Model model) {
+    	Map<String, Object> board = lotteryService.getBoardById(id);
         List<Map<String, Object>> comments = lotteryService.getCommentsByBoardId(id);
+        model.addAttribute("board", board);
         model.addAttribute("comments", comments);
         model.addAttribute("id", id);
         return "board_detail";

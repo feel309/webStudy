@@ -38,6 +38,10 @@ public class LotteryService {
     	lotteryDAO.insertBoard(board);
     }
     
+    public Map<String, Object> getBoardById(int id) {
+        return lotteryDAO.getBoardById(id);
+    }
+    
     public void insertComment(int boardId, Integer parentId, String content) {
         Map<String, Object> comment = new HashMap<>();
         comment.put("boardId", boardId);

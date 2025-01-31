@@ -42,6 +42,11 @@
         VALUES (#{purchaseDate}, #{lotteryName}, #{drawNumber}, #{quantity}, #{orderNumber});
     </insert>
     
+    <!-- 특정 게시글 조회 -->
+    <select id="getBoardById" parameterType="int" resultType="map">
+        SELECT * FROM lottery_board WHERE id = #{id}
+    </select>
+    
     <!-- 댓글 등록 -->
     <insert id="insertComment">
         INSERT INTO lottery_comment (board_id, parent_id, content)

@@ -7,6 +7,32 @@
     <title>게시판상세 화면</title>
 </head>
 <body>
+
+<h1>게시글 상세</h1>
+
+<table border="1">
+    <tr>
+        <th>구입일자</th>
+        <td>${board.purchase_date}</td>
+    </tr>
+    <tr>
+        <th>복권명</th>
+        <td>${board.lottery_name}</td>
+    </tr>
+    <tr>
+        <th>회차</th>
+        <td>${board.draw_number}</td>
+    </tr>
+    <tr>
+        <th>수량</th>
+        <td>${board.quantity}</td>
+    </tr>
+    <tr>
+        <th>주문번호</th>
+        <td>${board.order_number}</td>
+    </tr>
+</table>
+
 <h2>댓글</h2>
 <form method="post" action="/board/comment">
     <input type="hidden" name="boardId" value="${id}">
@@ -28,5 +54,6 @@
     </c:forEach>
 </ul>
 
+<a href="/board">목록으로</a>
 </body>
 </html>

@@ -9,7 +9,7 @@ public interface LotteryDAO {
     List<Map<String, Object>> getBoardList(Map<String, Object> params);
     int getBoardCount(Map<String, Object> params);
     void insertBoard(Map<String, Object> board);
-    
+    Map<String, Object> getBoardById(int id);
     // 댓글 기능 추가
     void insertComment(Map<String, Object> comment);
     List<Map<String, Object>> getCommentsByBoardId(int boardId);
