@@ -1,16 +1,13 @@
 package com.example.demo.controller;
 
-import java.util.Collection;
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -20,11 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.example.demo.dto.UserDTO;
 import com.example.demo.service.LotteryService;
 import com.example.demo.service.UserService;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -41,31 +36,12 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //초기 페이지
-    @GetMapping("/") 
-    public String home(Model model) {
-    	
-    	
-    	// 시큐리티 컨텍스트에서 현재 인증된 사용자 ID(유저네임) 가져오기
-    	String id = SecurityContextHolder.getContext().getAuthentication().getName();
-    	
-    	// 뷰에 전달할 사용자 ID를 "id" 속성에 추가
-    	model.addAttribute("id", id);
-    	
-    	// 시큐리티 컨텍스트에서 현재 인증된 사용자 권한(roles) 가져오기
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-    	
-    	// 인증된 사용자 권한 중 첫 번째 권한 가져오기 (여러 권한이 있을 경우 첫 번째 권한 사용)
-    	Iterator<? extends GrantedAuthority> iter = authorities.iterator();
-    	GrantedAuthority auth = iter.next();
-    	String role = auth.getAuthority();
+    @GetMapping("/")
+    public String home(Model model, Principal principal) {
+        // OAuth2 로그인 사용자의 ID 가져오기
+        String id = (principal != null) ? principal.getName() : "anonymousUser";
+        model.addAttribute("id", id);
 
-    	// 뷰에 전달할 사용자 권한(roles)을 "role" 속성에 추가
-    	model.addAttribute("role", role);
-    	
-//    	System.out.println("ID: " + id);
-//    	System.out.println("Role: " + role);
-    	
         return "home";
     }
     
