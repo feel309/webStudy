@@ -39,7 +39,7 @@ public class UserController {
     @GetMapping("/")
     public String home(Model model, Principal principal) {
         // OAuth2 로그인 사용자의 ID 가져오기
-        String id = (principal != null) ? principal.getName() : "anonymousUser";
+        String id = (principal != null) ? "OAuthUser" : "anonymousUser";
         model.addAttribute("id", id);
 
         return "home";

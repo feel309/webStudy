@@ -19,6 +19,11 @@
     <button id="googleLoginBtn" type="button" onclick="location.href='/oauth2/authorization/google'">
         Google 로그인
     </button>
+    
+	<!-- 네이버 로그인 버튼 -->
+	<button id="naverLoginBtn" type="button" onclick="location.href='/oauth2/authorization/naver'">
+	    Naver 로그인
+	</button>
 
     <script>
         var userName = $('input[name=userName]').val();
@@ -28,11 +33,13 @@
             $('#regBtn').show();
             $('#logoutBtn').hide();
             $('#googleLoginBtn').show();
+            $('#naverLoginBtn').show();
         } else {
             $('#loginBtn').hide();
             $('#regBtn').hide();
             $('#logoutBtn').show();
             $('#googleLoginBtn').hide();
+            $('#naverLoginBtn').hide();
         }
     </script>
 
