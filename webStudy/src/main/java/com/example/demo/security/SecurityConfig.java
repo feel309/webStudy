@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +12,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
+    
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	
@@ -33,7 +37,10 @@ public class SecurityConfig {
             )
             .oauth2Login((auth) -> auth
                 .loginPage("/login")  // OAuth2 로그인도 같은 로그인 페이지 사용
-                .defaultSuccessUrl("/lotto/board") // 로그인 성공 후 이동할 페이지
+                .defaultSuccessUrl("/lotto/board", true) // 로그인 성공 후 이동할 페이지
+                .failureUrl("/login?error=true") // 로그인 실패 시 에러 메시지 추가
+                .userInfoEndpoint(userInfoEndpointConfig -> // 로그인 성공 후 사용자 정보를 가져올 때의 설정
+                userInfoEndpointConfig.userService(customOAuth2UserService)) // 로그인 성공 후 후속 조치
             )
             .sessionManagement((auth) -> auth
                 .sessionFixation((sessionFixation) -> sessionFixation.newSession()) //로그인 시 세션 새로 생성
@@ -43,7 +50,10 @@ public class SecurityConfig {
             )
             .logout((auth) -> auth //로그아웃 설정
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/login?logout") // 로그아웃 시 명확한 URL 제공
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)  // 인증 정보까지 삭제
+                .deleteCookies("JSESSIONID") // 세션 쿠키 삭제
             )
             .csrf((auth) -> auth.disable()); //CSRF 보호 비활성화
 
