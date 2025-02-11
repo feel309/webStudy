@@ -43,5 +43,8 @@
 	</c:forEach>
 </div>
 
+<!-- 로또번호 자동생성 화면이동 -->
+<button id="loginBtn" type="button" onclick="location.href='/board/lotto/generate/page'">로또번호 자동생성 화면이동</button>
+
 </body>
 </html>

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,10 @@ import com.example.demo.dao.LotteryDAO;
 
 @Service
 public class LotteryService {
+	
+    private static final int LOTTO_MIN = 1;
+    private static final int LOTTO_MAX = 45;
+    private static final int LOTTO_SIZE = 6;
 	
 	@Autowired
     private LotteryDAO lotteryDAO;
@@ -53,5 +59,16 @@ public class LotteryService {
     public List<Map<String, Object>> getCommentsByBoardId(int boardId) {
         return lotteryDAO.getCommentsByBoardId(boardId);
     }
+    
+    
+    public List<Integer> generateLottoNumbers() {
+        return new Random().ints(LOTTO_MIN, LOTTO_MAX + 1)
+                .distinct()
+                .limit(LOTTO_SIZE)
+                .sorted()
+                .boxed()
+                .collect(Collectors.toList());
+    }
+    
     
 }

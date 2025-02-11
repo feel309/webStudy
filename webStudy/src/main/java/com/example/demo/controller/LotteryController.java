@@ -82,5 +82,18 @@ public class LotteryController {
         return "board_detail";
     }
     
+    //로또 번호 자동 생성
+    @GetMapping("/board/lotto/generate/page")
+    public String generateLottoNumbersPage(Model model) {
+        return "lotto_auto_generate";
+    }
+    
+    //로또 번호 자동 생성
+    @GetMapping("/board/lotto/generate")
+    public String generateLottoNumbers(Model model) {
+        List<Integer> lottoNumbers = lotteryService.generateLottoNumbers();
+        model.addAttribute("lottoNumbers", lottoNumbers);
+        return "lotto_auto_generate";
+    }
     
 }
