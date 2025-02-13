@@ -42,12 +42,6 @@ public class SecurityConfig {
                 .userInfoEndpoint(userInfoEndpointConfig -> // 로그인 성공 후 사용자 정보를 가져올 때의 설정
                 userInfoEndpointConfig.userService(customOAuth2UserService)) // 로그인 성공 후 후속 조치
             )
-//            .sessionManagement((auth) -> auth
-//                .sessionFixation((sessionFixation) -> sessionFixation.newSession()) //로그인 시 세션 새로 생성
-//                .maximumSessions(1)				//다른 곳에서 로그인하면 이전 세션 종료됨
-//                .maxSessionsPreventsLogin(true)	//새로운 로그인 시도 차단됨
-//                .expiredUrl("/login")	//세션 만료되었을 때 사용자가 리다이렉트될 URL 설정
-//            )
             .logout((auth) -> auth //로그아웃 설정
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout") // 로그아웃 시 명확한 URL 제공

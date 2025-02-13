@@ -63,8 +63,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         ResponseEntity<Map> headerResponse = restTemplate.exchange(userInfoEndpointUri, HttpMethod.GET, entity, Map.class);
         Map<String, Object> attributes = headerResponse.getBody();
 
-//      Map<String, Object> attributes = oAuth2User.getAttributes(); //기존방식
-        
         logger.info("User attributes: {}", attributes);
         
         String email = "";
