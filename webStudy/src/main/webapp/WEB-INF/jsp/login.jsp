@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>로그인</title>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 </head>
 <body>
     <h2>로그인</h2>

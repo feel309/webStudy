@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>초기화면</title>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
