@@ -93,7 +93,14 @@
             <tr><th>복권명</th><td>${board.lottery_name}</td></tr>
             <tr><th>회차</th><td>${board.draw_number}</td></tr>
             <tr><th>수량</th><td>${board.quantity}</td></tr>
-            <tr><th>주문번호</th><td>${board.order_number}</td></tr>
+            <tr><th>로또번호</th><td>${board.order_number}</td></tr>
+			<tr><th>첨부파일</th>
+			    <td>
+			        <c:if test="${not empty board.file_path}">
+			            <img src="/uploads/image?filename=${board.file_path.substring(board.file_path.lastIndexOf('/')+1)}" width="200">
+			        </c:if>
+			    </td>
+			</tr>
         </table>
         <h2>댓글</h2>
         <form method="post" action="/board/comment">

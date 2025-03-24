@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.service.LotteryService;
 
@@ -52,15 +56,32 @@ public class LotteryController {
                            @RequestParam String lotteryName,
                            @RequestParam int drawNumber,
                            @RequestParam int quantity,
-                           @RequestParam String orderNumber) {
+                           @RequestParam String orderNumber,
+                           @RequestParam("file") MultipartFile file) throws IOException {
+    	
+    	
+        String filePath = null;
+
+        // 파일 업로드 처리
+        if (!file.isEmpty()) {
+            String uploadDir = "C:/uploads/"; // 파일 저장 경로
+            File dir = new File(uploadDir);
+            if (!dir.exists()) dir.mkdirs(); // 디렉토리 없으면 생성
+
+            filePath = uploadDir + file.getOriginalFilename();
+            file.transferTo(Paths.get(filePath)); // 파일 저장
+        }
+    	
         HashMap<String, Object> board = new HashMap<>();
         board.put("purchaseDate", purchaseDate);
         board.put("lotteryName", lotteryName);
         board.put("drawNumber", drawNumber);
         board.put("quantity", quantity);
         board.put("orderNumber", orderNumber);
+        board.put("filePath", filePath); // 파일 경로 추가
 
         lotteryService.insertBoard(board);
+        
         return "redirect:/board";
     }
     

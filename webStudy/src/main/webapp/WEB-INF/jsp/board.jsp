@@ -92,7 +92,8 @@
                 <th>복권명</th>
                 <th>회차</th>
                 <th>수량</th>
-                <th>주문번호</th>
+                <th>로또번호</th>
+                <th>첨부파일유무</th>
             </tr>
             <c:forEach var="board" items="${boardList}">
                 <tr>
@@ -101,6 +102,12 @@
                     <td>${board.draw_number}</td>
                     <td>${board.quantity}</td>
                     <td>${board.order_number}</td>
+                    <c:if test="${not empty board.file_path}">
+                    	<td>O</td>
+                    </c:if>
+                    <c:if test="${empty board.file_path}">
+                    	<td>X</td>
+                    </c:if>
                 </tr>
             </c:forEach>
         </table>
